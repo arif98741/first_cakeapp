@@ -1,0 +1,17 @@
+/*this is css file for the program*/
+
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: #ddd
+}
+
+#content{
+    min-height: 400px;
+    padding: 5px;
+    margin: 10px;
+    border:1px solid #000;
+    border-radius: 5px;
+}
