@@ -20,6 +20,7 @@ class TestController extends  AppController
         $this->url = Router::url();
         $this->connection = ConnectionManager::get('default');
         $this->viewBuilder()->setlayout('mainlayout');
+        $this->loadModel('Posts');
     }
 
     public function index()
@@ -64,7 +65,6 @@ class TestController extends  AppController
         ]);
     }
 
-
     /*
      * update method
      * @param $id
@@ -79,8 +79,6 @@ class TestController extends  AppController
 
         ],['id' => $id]);
     }
-
-
 
 
     public function about()
@@ -98,6 +96,31 @@ class TestController extends  AppController
     public function beta()
     {
 
+    }
+
+    public function upload()
+    {
+        $post = '';
+        if ($this->request->is('post'))
+        {
+            if (!empty($this->request->data['file']['name']))
+            {
+                $filename = $this->request->data['file']['name'];
+                $url = Router::url('/',true).'images/'.$filename;
+                $upload_path = 'images/';
+                $uploadfile = $upload_path.$filename;
+                if(move_uploaded_file($this->request->data['file']['tmp_name'],$uploadfile))
+                {
+                    $post = $this->Employees->newEntity();
+                }
+
+            }else{
+
+                $this->Flash->error(__('Please select a file to upload'));
+            }
+        }
+
+        $this->set('posts',$post);
     }
 
 }
